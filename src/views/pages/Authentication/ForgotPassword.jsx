@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Applogo } from "../../../Routes/ImagePath";
 import { requestPasswordReset } from "../../../helpers/users";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   const handleresetpassword = async () => {

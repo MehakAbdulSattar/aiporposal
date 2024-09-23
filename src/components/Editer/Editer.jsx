@@ -50,23 +50,6 @@ function Editer() {
     [data]
   );
 
-  const handleDownloadDocx = async () => {
-    if (!editor) return;
-    const editorContent = editor.getText();
-
-    const doc = new Document({
-      sections: [
-        {
-          properties: {},
-          children: [new Paragraph(editorContent)],
-        },
-      ],
-    });
-
-    const blob = await Packer.toBlob(doc);
-    saveAs(blob, "proposal.docx");
-  };
-
   return (
     <div>
       <div className="container" ref={wrapperRef}></div>

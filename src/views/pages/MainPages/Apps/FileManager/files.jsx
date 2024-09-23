@@ -8,7 +8,6 @@ import { Avatar_16 } from "../../../../../Routes/ImagePath";
 const Files = ({ setData }) => {
   const [teamMemberOptions, setTeamMemberOptions] = useState([]);
   const [teamLeaderOptions, setTeamLeaderOptions] = useState([]);
-  const [lead, setLead] = useState([]);
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -27,6 +26,8 @@ const Files = ({ setData }) => {
         }));
         setTeamMemberOptions(options);
         setTeamLeaderOptions(options);
+        console.log(teamMemberOptions);
+        console.log(teamLeaderOptions);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -37,18 +38,6 @@ const Files = ({ setData }) => {
   const [projects, setProjects] = useState([]);
   const authToken = localStorage.getItem("BearerToken");
   const navigate = useNavigate();
-  const companies = [
-    { value: 1, label: "Fintech" },
-    { value: 2, label: "Block chain" },
-    { value: 3, label: "Real Estate" },
-    { value: 4, label: "Game development" },
-    { value: 5, label: "Education and research" },
-    { value: 6, label: "Logistics and transformation" },
-    { value: 7, label: "Health care" },
-    { value: 8, label: "Retail and distribution" },
-    { value: 9, label: "E-Commerce" },
-    { value: 10, label: "Artificial Intelligence" },
-  ];
 
   const handleNavigate = (project) => {
     navigate("/view-project-details", { state: { project: project } });
@@ -87,7 +76,7 @@ const Files = ({ setData }) => {
               })
             );
 
-            const techStacks = await Promise.all(
+            await Promise.all(
               techStackIds.map(async (techStackId) => {
                 const techStackRes = await axios.get(
                   `${BASE_URL}techstacks/${techStackId}/`,
@@ -108,7 +97,7 @@ const Files = ({ setData }) => {
                 },
               }
             );
-            const developmentTeamNames = await Promise.all(
+            await Promise.all(
               developmentTeamIds.map(async (memberId) => {
                 const memberRes = await axios.get(
                   `${BASE_URL}users/${memberId}/`,

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Proposals from "./proposals";
 
 const ProposalList = () => {
   const [proposal, setData] = useState();
+
+  useEffect(() => {
+    console.log(proposal);
+  }, []);
+
   return (
     <>
       <div className="page-wrapper">
+        ``
         {/* Page Content */}
         <div className="content container-fluid">
           <div className="row">

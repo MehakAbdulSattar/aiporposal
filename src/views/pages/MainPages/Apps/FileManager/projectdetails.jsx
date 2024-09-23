@@ -10,7 +10,6 @@ import {
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import DefaultEditor from "react-simple-wysiwyg";
-import { Navigation } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { BASE_URL } from "../../../../../constants/urls";
 const ProjectDetails = () => {
@@ -52,6 +51,7 @@ const ProjectDetails = () => {
     document.body.appendChild(link);
     link.click();
     link.remove();
+    console.log(team);
   };
 
   useEffect(() => {
