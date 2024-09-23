@@ -198,7 +198,7 @@ import ProposalCreation from "../../views/pages/MainPages/Apps/FileManager/propo
 import ArchieveProjectDetails from "../../views/pages/MainPages/Apps/FileManager/projectdetails.jsx";
 import ProposalDetails from "../../views/pages/MainPages/Apps/FileManager/proposaldetails.jsx";
 
-import ProposalList from "../../../../../react/template/src/views/pages/MainPages/Apps/FileManager/ProposalList.jsx";
+import ProposalList from "../../views/pages/MainPages/Apps/FileManager/ProposalList.jsx";
 
 const AppContainer = () => {
   useEffect(() => {
