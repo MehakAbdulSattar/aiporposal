@@ -243,7 +243,7 @@ const ProjectModelPopup = ({ project }) => {
       if (modalElement) {
         modalElement.click();
       }
-      //window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error("Error creating project:", error);
     }
@@ -330,10 +330,10 @@ const ProjectModelPopup = ({ project }) => {
     setServerLink(value);
     setFormErrors({
       ...formErrors,
-      liveLink: !validateUrl(value, "server")
+      serverLink: !validateUrl(value, "server")
         ? value === ""
           ? "Server Link is required"
-          : "Invalid Live URL format"
+          : "Invalid Server URL format"
         : "",
     });
   };
@@ -400,11 +400,17 @@ const ProjectModelPopup = ({ project }) => {
 
       if (response.ok) {
         alert("Project updated successfully!");
+        const modalElement = document.querySelector(
+          '[data-bs-dismiss="modal"]'
+        );
+        if (modalElement) {
+          modalElement.click();
+        }
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Error updating project:", errorData);
       }
-      window.location.reload();
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -929,6 +935,11 @@ const ProjectModelPopup = ({ project }) => {
                     type="file"
                     multiple
                     onChange={handleFileChange}
+                    style={{
+                      borderColor: "transparent",
+                      backgroundColor: "transparent",
+                      color: "red",
+                    }}
                     required
                   />
                   {formErrors.documents && (
@@ -942,11 +953,6 @@ const ProjectModelPopup = ({ project }) => {
                           type="button"
                           onClick={() => removeFile(index)}
                           className="btn btn-sm btn-danger"
-                          style={{
-                            borderColor: "transparent",
-                            backgroundColor: "transparent",
-                            color: "red",
-                          }}
                         >
                           Remove
                         </button>
@@ -1495,11 +1501,30 @@ const ProjectModelPopup = ({ project }) => {
                         documents: file ? "" : "Document upload is required",
                       });
                     }}
+                    style={{
+                      borderColor: "transparent",
+                      backgroundColor: "transparent",
+                      color: "red",
+                    }}
                     required
                   />
                   {formErrors.documents && (
                     <span className="text-danger">{formErrors.documents}</span>
                   )}
+                  <ul>
+                    {documents.map((file, index) => (
+                      <li key={index}>
+                        {file.name}{" "}
+                        <button
+                          type="button"
+                          onClick={() => removeFile(index)}
+                          className="btn btn-sm btn-danger"
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="submit-section">

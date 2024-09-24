@@ -3,8 +3,6 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import "./style.css";
 import { useLocation } from "react-router-dom";
-import { saveAs } from "file-saver";
-import { Document, Packer, Paragraph } from "docx";
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -25,12 +23,15 @@ function Editer() {
   const { data } = location.state || {};
 
   useEffect(() => {
+    console.log(editor);
+    console.log(text);
+
     const fetchResponse = async () => {
       setText(data);
     };
 
     fetchResponse();
-  }, []);
+  }, [data, editor, text]);
 
   const wrapperRef = useCallback(
     (wrapper) => {

@@ -26,15 +26,14 @@ const Files = ({ setData }) => {
         }));
         setTeamMemberOptions(options);
         setTeamLeaderOptions(options);
-        console.log(teamMemberOptions);
-        console.log(teamLeaderOptions);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchTeamMembers();
-  }, []);
+  }, []); // No need to add teamMemberOptions or teamLeaderOptions as dependencies
+
   const [projects, setProjects] = useState([]);
   const authToken = localStorage.getItem("BearerToken");
   const navigate = useNavigate();
@@ -134,7 +133,7 @@ const Files = ({ setData }) => {
         >
           <div className="card w-100">
             <div className="card-body">
-              <div className="dropdown dropdown-action profile-action ">
+              {/* <div className="dropdown dropdown-action profile-action ">
                 <Link
                   to="#"
                   className="action-icon dropdown-toggle"
@@ -164,7 +163,7 @@ const Files = ({ setData }) => {
                     <i className="fa fa-trash m-r-5" /> Delete
                   </Link>
                 </div>
-              </div>
+              </div> */}
               <div className="pro-deadline m-b-15">
                 <img
                   src={project.logo_icon}

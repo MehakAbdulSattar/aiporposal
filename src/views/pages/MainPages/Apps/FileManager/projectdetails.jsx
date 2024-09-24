@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Mail, Key, Link2 } from "react-feather";
@@ -13,6 +13,22 @@ import DefaultEditor from "react-simple-wysiwyg";
 import { useLocation } from "react-router-dom";
 import { BASE_URL } from "../../../../../constants/urls";
 const ProjectDetails = () => {
+  const companies = useMemo(
+    () => [
+      { value: 1, label: "Fintech" },
+      { value: 2, label: "Block chain" },
+      { value: 3, label: "Real Estate" },
+      { value: 4, label: "Game development" },
+      { value: 5, label: "Education and research" },
+      { value: 6, label: "Logistics and transformation" },
+      { value: 7, label: "Health care" },
+      { value: 8, label: "Retail and distribution" },
+      { value: 9, label: "E-Commerce" },
+      { value: 10, label: "Artificial Intelligence" },
+    ],
+    []
+  );
+
   const navigate = useNavigate();
   const location = useLocation();
   const [projectName, setProjectName] = useState("");
@@ -137,6 +153,7 @@ const ProjectDetails = () => {
         .filter((option) => project.tech_stack.includes(option.value))
         .map((option) => option.label);
       setStacks(tech_stack);
+
       setTeam(
         teamLeaderOptions
           .filter((option) => project.development_team.includes(option.value))
@@ -145,7 +162,7 @@ const ProjectDetails = () => {
     } catch {
       console.log("not edit");
     }
-  }, [project, techStackOptions, teamMemberOptions]);
+  }, [project, techStackOptions, teamLeaderOptions]);
 
   useEffect(() => {
     try {
@@ -167,6 +184,8 @@ const ProjectDetails = () => {
         (company) =>
           company.label.toLowerCase() === project.industry.toLowerCase()
       );
+
+      // Setting various state values
       setProjectName(project.name);
       setClientName(project.client_name);
       setGithubLink(project.git_link);
@@ -186,22 +205,15 @@ const ProjectDetails = () => {
       setServerLink(project.server_link);
       setRating(parseInt(project.rating));
     } catch {
-      console.log("not edir");
+      console.log("not edit");
     }
-  }, [project, teamMemberOptions]);
-
-  const companies = [
-    { value: 1, label: "Fintech" },
-    { value: 2, label: "Block chain" },
-    { value: 3, label: "Real Estate" },
-    { value: 4, label: "Game development" },
-    { value: 5, label: "Education and research" },
-    { value: 6, label: "Logistics and transformation" },
-    { value: 7, label: "Health care" },
-    { value: 8, label: "Retail and distribution" },
-    { value: 9, label: "E-Commerce" },
-    { value: 10, label: "Artificial Intelligence" },
-  ];
+  }, [
+    project,
+    teamMemberOptions,
+    companies,
+    platformOptions,
+    techStackOptions,
+  ]);
 
   const customStyles = {
     option: (provided, state) => ({
@@ -259,10 +271,10 @@ const ProjectDetails = () => {
     formData.append("description", description);
     formData.append("client_name", clientName);
     formData.append("rating", rating);
-    const formattedDate = selectedDate2.toLocaleDateString("en-CA");
-    formData.append("end_date", formattedDate);
-    const formattedDate1 = selectedDate1.toLocaleDateString("en-CA");
-    formData.append("start_date", formattedDate1);
+    //const formattedDate = selectedDate2.toLocaleDateString("en-CA");
+    formData.append("end_date", selectedDate2);
+    // const formattedDate1 = selectedDate1.toLocaleDateString("en-CA");
+    formData.append("start_date", selectedDate1);
     documents.forEach((file, index) => {
       formData.append("project_documents", file);
     });
@@ -303,6 +315,14 @@ const ProjectDetails = () => {
 
       if (response.ok) {
         alert("Project updated successfully!");
+        alert("Project updated successfully!");
+        const modalElement = document.querySelector(
+          '[data-bs-dismiss="modal"]'
+        );
+        if (modalElement) {
+          modalElement.click();
+        }
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Error updating project:", errorData);
